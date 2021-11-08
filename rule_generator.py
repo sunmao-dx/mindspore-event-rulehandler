@@ -1,9 +1,12 @@
 import json
+from numpy.lib.utils import info
 import pandas as pd
 
 
 def rule_generator(issue):
-    issue_user_login = issue['issueUserID']
+    issue_user_login = issue['issueUser']['issueUserID']
+    is_user_ent = issue['issueUser']['IsEntUser']
+    issue_labels = issue['issueLabel']
 
     # Step 1: 2 dimensions of user profile
     def label_user_profile(user):
@@ -48,11 +51,11 @@ def rule_generator(issue):
         execute_time = issue['issueUpdateTime']
         rules = []
 
-        if user_activity == 'first_issuer' and user_habit == 'none':
+        if is_user_ent == 1 or label_handler(issue_labels):
 
             info_payload = {
                 'targetUser': community_assignee_list,
-                'infoType': 'issueComment',
+                'infoType': 'Assignee',
                 'infoContent': info_text_template['infoText']['assign_maintainer']
             }
             rule = {
@@ -68,7 +71,7 @@ def rule_generator(issue):
 
         info_payload = {
             'targetUser': issue_user_login,
-            'infoType': info_rule['info_type'],
+            'infoType': 'AssigneeReminder',
             'infoContent': info_text_template['infoText']['label_without_recommendation']
         }
         rule = {
@@ -89,6 +92,14 @@ def rule_generator(issue):
     # Step 3: Generate the complete rule list
     rule_list = info_rules
     return rule_list
+
+def label_handler(labels):
+    if labels is not None:
+        for label in labels:
+            if label['name'].contains("user/"):
+                return True
+            else:
+                return False
 
 
 if __name__ == "__main__":
