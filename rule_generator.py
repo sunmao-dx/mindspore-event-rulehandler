@@ -55,7 +55,7 @@ def rule_generator(issue):
 
             info_payload = {
                 'targetUser': community_assignee_list,
-                'infoType': 'Assignee',
+                'infoType': 'AssigneeReminder',
                 'infoContent': info_text_template['infoText']['assign_maintainer']
             }
             rule = {
@@ -71,7 +71,7 @@ def rule_generator(issue):
 
         info_payload = {
             'targetUser': issue_user_login,
-            'infoType': 'AssigneeReminder',
+            'infoType': 'LabelReminder',
             'infoContent': info_text_template['infoText']['label_without_recommendation']
         }
         rule = {
