@@ -5,7 +5,7 @@ import pandas as pd
 
 def rule_generator(issue):
     issue_user_login = issue['issueUser']['issueUserID']
-    is_user_ent = issue['issueUser']['IsEntUser']
+    is_user_ent = issue['issueUser']['isEntUser']
     issue_labels = issue['issueLabel']
 
     # Step 1: 2 dimensions of user profile
