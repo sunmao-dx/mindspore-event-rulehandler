@@ -70,7 +70,7 @@ def rule_generator(issue):
         # print(info_rule)
 
         info_payload = {
-            'targetUser': issue_user_login,
+            'targetUser': [issue_user_login],
             'infoType': 'LabelReminder',
             'infoContent': info_text_template['infoText']['label_without_recommendation']
         }
@@ -96,7 +96,7 @@ def rule_generator(issue):
 def label_handler(labels):
     if labels is not None:
         for label in labels:
-            if label['name'].contains("user/"):
+            if label['labelname'].contains("user/"):
                 return True
             else:
                 return False
