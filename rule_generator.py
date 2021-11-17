@@ -52,7 +52,6 @@ def rule_generator(issue):
         rules = []
 
         if is_user_ent == 0 or label_handler(issue_labels):
-
             info_payload = {
                 'targetUser': community_assignee_list,
                 'infoType': 'AssigneeReminder',
@@ -94,12 +93,14 @@ def rule_generator(issue):
     return rule_list
 
 def label_handler(labels):
+    isContainUser = False
     if labels:
         for label in labels:
             if "user/" in label['labelName']:
-                return True
-            else:
-                return False
+                isContainUser = True
+                break
+    return isContainUser
+    
 
 
 if __name__ == "__main__":
