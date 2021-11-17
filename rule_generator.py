@@ -51,7 +51,7 @@ def rule_generator(issue):
         execute_time = issue['issueUpdateTime']
         rules = []
 
-        if is_user_ent == 1 or label_handler(issue_labels):
+        if is_user_ent == 0 or label_handler(issue_labels):
 
             info_payload = {
                 'targetUser': community_assignee_list,
@@ -94,9 +94,9 @@ def rule_generator(issue):
     return rule_list
 
 def label_handler(labels):
-    if labels is not None:
+    if labels:
         for label in labels:
-            if label['labelName'].contains("user/"):
+            if "user/" in label['labelName']:
                 return True
             else:
                 return False
