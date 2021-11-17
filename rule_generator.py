@@ -96,7 +96,7 @@ def rule_generator(issue):
 def label_handler(labels):
     if labels is not None:
         for label in labels:
-            if label['labelname'].contains("user/"):
+            if label['labelName'].contains("user/"):
                 return True
             else:
                 return False
