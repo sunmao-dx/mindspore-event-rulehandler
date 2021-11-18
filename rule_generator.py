@@ -43,7 +43,7 @@ def rule_generator(issue):
     def info_rule_generator(user_activity, user_habit):
         user_rules = pd.read_csv('./data/rule_generator/issue_label_rule_generator.csv')
         user_rules = user_rules.set_index('user_habit')
-        community_assignee_list = ['fangwenyi', 'cheng_xiaoli']  # Community Maintainer
+        community_assignee_list = ['clement_li', 'clement_li']  # Community Maintainer
 
         with open("./data/rule_generator/info_text_template.json", 'r',  encoding='UTF-8') as load_f:
             info_text_template = pd.DataFrame(json.load(load_f)).set_index("infoType")
