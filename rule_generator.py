@@ -44,7 +44,7 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
     :return: an info rule
     """
     # Parameter reorganization
-    issue_user_login = issue['issueUserID']
+    issue_user_login = issue['issueUser']['issueUserID']
     execute_time = issue['issueUpdateTime']
 
     user_activity, user_habit = developer_portrait
