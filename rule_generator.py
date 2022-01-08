@@ -93,7 +93,7 @@ def action_rule_generator(issue, developer_portrait, bot_conf):
 
 def rule_generator(issue, user_profile, bot_conf):
     # Step 1: Generate the issue owner portrait
-    issue_owner_portrait = label_developer_portrait(issue['issueUserID'], user_profile)
+    issue_owner_portrait = label_developer_portrait(issue['issueUser']['issueUserID'], user_profile)
     # Step 2: Generate the rules
     info_rules = info_rule_generator(issue, issue_owner_portrait, bot_conf)
     # Step 3: Finish the complete rule list
