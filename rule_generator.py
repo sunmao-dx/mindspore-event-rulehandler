@@ -72,7 +72,7 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
     info_rule = json.loads(bot_reaction[user_activity][user_habit])
 
     info_payload = {
-        'targetUser': issue_user_login,
+        'targetUser': [issue_user_login],
         'infoType': info_rule['info_type'],
         'infoContent': info_text_template['infoText']['label_without_recommendation']
     }
