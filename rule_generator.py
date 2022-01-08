@@ -56,10 +56,17 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
     # Generating rules
     rules = []
     if user_activity == 'first_issuer' and user_habit == 'none':
+
+        infoContent =  info_text_template['infoText']['assign_maintainer']
+        assigneeStr = ''
+        for assignee in community_assignee_list:
+            assigneeStr = assigneeStr + '@' + assignee + ' '
+        infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
+
         info_payload = {
             'targetUser': community_assignee_list,
             'infoType': 'issueComment',
-            'infoContent': info_text_template['infoText']['assign_maintainer']
+            'infoContent': infoContent
         }
         rule = {
             'issueID': issue['issueID'],

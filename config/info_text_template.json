@@ -26,9 +26,9 @@
 {
     "infoType": "assign_maintainer",
     "infoText": { 
-        "English": "Please assign maintainer to check this issue.",
-        "Chinese": "请为此issue分配处理人。",
-        "general_content": "@{mainCaller1} @{mainCaller2}"
+        "English": "",
+        "Chinese": "",
+        "general_content": "Please assign maintainer to check this issue. \n请为此issue分配处理人。\n{assign_maintainer_placeholder}"
     }
 },
 {

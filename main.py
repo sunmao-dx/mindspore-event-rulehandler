@@ -22,7 +22,15 @@ def rulehandler():
     # Loading data
     label_user_profile = pd.read_csv('config/developer_portrait/issue_label_user_profile.csv').set_index('owner_login')
     label_bot_reaction = pd.read_csv('config/bot_reaction/issue_label_rule_generator.csv').set_index('user_habit')
-    community_assignee_list = ['lizi', 'mfl']  # Community Maintainer
+
+    # TODO: Change rules for different communities here. Also, you can defined rules in json file.
+    issueOrg = issue['repoInfo']['org']
+    issueRepo = issue['repoInfo']['repo']
+    if issueOrg == 'mindspore' and issueRepo == 'mindspore':
+        community_assignee_list = ['lizi', 'mfl']  # Community Maintainer
+    else:
+        community_assignee_list = ['userID1', 'userID2']
+
     with open("config/info_text_template.json", 'r', encoding='UTF-8') as load_f:
         info_text_template = pd.DataFrame(json.load(load_f)).set_index("infoType")
 
