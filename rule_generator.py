@@ -52,32 +52,32 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
     user_activity, user_habit = developer_portrait
 
     community_assignee_list = bot_conf['community_assignee_list']
-    community_assignee_list_test = bot_conf['community_assignee_list_test']
+    # community_assignee_list_test = bot_conf['community_assignee_list_test']
     info_text_template = bot_conf['info_text_template']
     bot_reaction = bot_conf['bot_reaction']
 
     # Generating rules
     rules = []
-    if user_activity == 'first_issuer' and user_habit == 'none':
+    # if user_activity == 'first_issuer' and user_habit == 'none':
 
-        infoContent =  info_text_template['infoText']['assign_maintainer']
-        assigneeStr = ''
-        for assignee in community_assignee_list_test:
-            assigneeStr = assigneeStr + '@' + assignee + ' '
-        infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
+    #     infoContent =  info_text_template['infoText']['assign_maintainer']
+    #     assigneeStr = ''
+    #     for assignee in community_assignee_list_test:
+    #         assigneeStr = assigneeStr + '@' + assignee + ' '
+    #     infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
 
-        info_payload = {
-            'targetUser': community_assignee_list_test,
-            'infoType': 'issueComment',
-            'infoContent': infoContent
-        }
-        rule = {
-            'issueID': issue['issueID'],
-            'ruleType': 'info',
-            'exeTime': execute_time,
-            'infoPayload': info_payload
-        }
-        rules.append(rule)
+    #     info_payload = {
+    #         'targetUser': community_assignee_list_test,
+    #         'infoType': 'issueComment',
+    #         'infoContent': infoContent
+    #     }
+    #     rule = {
+    #         'issueID': issue['issueID'],
+    #         'ruleType': 'info',
+    #         'exeTime': execute_time,
+    #         'infoPayload': info_payload
+    #     }
+    #     rules.append(rule)
 
     if is_user_ent == 0 or label_handler(issue_labels):
         infoContent =  info_text_template['infoText']['assign_maintainer']
