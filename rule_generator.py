@@ -87,7 +87,7 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
         infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
         info_payload = {
             'targetUser': community_assignee_list,
-            'infoType': 'AssigneeReminder',
+            'infoType': 'issueComment',
             'infoContent': infoContent
         }
         rule = {
