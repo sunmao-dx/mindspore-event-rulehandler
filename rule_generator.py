@@ -46,10 +46,13 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
     # Parameter reorganization
     issue_user_login = issue['issueUser']['issueUserID']
     execute_time = issue['issueUpdateTime']
+    is_user_ent = issue['issueUser']['isEntUser']
+    issue_labels = issue['issueLabel']
 
     user_activity, user_habit = developer_portrait
 
     community_assignee_list = bot_conf['community_assignee_list']
+    community_assignee_list_test = bot_conf['community_assignee_list_test']
     info_text_template = bot_conf['info_text_template']
     bot_reaction = bot_conf['bot_reaction']
 
@@ -59,12 +62,12 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
 
         infoContent =  info_text_template['infoText']['assign_maintainer']
         assigneeStr = ''
-        for assignee in community_assignee_list:
+        for assignee in community_assignee_list_test:
             assigneeStr = assigneeStr + '@' + assignee + ' '
         infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
 
         info_payload = {
-            'targetUser': community_assignee_list,
+            'targetUser': community_assignee_list_test,
             'infoType': 'issueComment',
             'infoContent': infoContent
         }
@@ -75,6 +78,21 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
             'infoPayload': info_payload
         }
         rules.append(rule)
+
+    if is_user_ent == 0 or label_handler(issue_labels):
+        info_payload = {
+            'targetUser': community_assignee_list,
+            'infoType': 'AssigneeReminder',
+            'infoContent': info_text_template['infoText']['assign_maintainer']
+        }
+        rule = {
+            'issueID': issue['issueID'],
+            'ruleType': 'info',
+            'exeTime': execute_time,
+            'infoPayload': info_payload
+        }
+        rules.append(rule)
+
 
     info_rule = json.loads(bot_reaction[user_activity][user_habit])
 
@@ -109,6 +127,16 @@ def rule_generator(issue, user_profile, bot_conf):
         info_rules = list(info_rules)
     rule_list = rule_list + info_rules
     return rule_list
+
+def label_handler(labels):
+    isContainUser = False
+    if labels:
+        for label in labels:
+            if "user/" in label['labelName']:
+                isContainUser = True
+                break
+    return isContainUser
+
 
 
 if __name__ == "__main__":

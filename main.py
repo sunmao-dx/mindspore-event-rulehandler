@@ -31,11 +31,14 @@ def rulehandler():
     else:
         community_assignee_list = ['userID1', 'userID2']
 
+    community_assignee_list_test = ['clement_li']
+
     with open("config/info_text_template.json", 'r', encoding='UTF-8') as load_f:
         info_text_template = pd.DataFrame(json.load(load_f)).set_index("infoType")
 
     bot_conf = {
         'community_assignee_list': community_assignee_list,
+        'community_assignee_list_test': community_assignee_list_test,
         'info_text_template': info_text_template,
         'bot_reaction': label_bot_reaction
     }
