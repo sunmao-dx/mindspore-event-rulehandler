@@ -27,7 +27,7 @@ def rulehandler():
     issueOrg = issue['repoInfo']['org']
     issueRepo = issue['repoInfo']['repo']
     if issueOrg == 'mindspore' and issueRepo == 'mindspore':
-        community_assignee_list = ['lizi', 'mfl']  # Community Maintainer
+        community_assignee_list = ['fangwenyi', 'cheng_xiaoli']  # Community Maintainer
     else:
         community_assignee_list = ['userID1', 'userID2']
 
