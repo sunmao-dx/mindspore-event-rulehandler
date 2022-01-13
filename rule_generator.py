@@ -80,10 +80,15 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
         rules.append(rule)
 
     if is_user_ent == 0 or label_handler(issue_labels):
+        infoContent =  info_text_template['infoText']['assign_maintainer']
+        assigneeStr = ''
+        for assignee in community_assignee_list:
+            assigneeStr = assigneeStr + '@' + assignee + ' '
+        infoContent['general_content'] = infoContent['general_content'].replace('{assign_maintainer_placeholder}', assigneeStr)
         info_payload = {
             'targetUser': community_assignee_list,
             'infoType': 'AssigneeReminder',
-            'infoContent': info_text_template['infoText']['assign_maintainer']
+            'infoContent': infoContent
         }
         rule = {
             'issueID': issue['issueID'],
