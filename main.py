@@ -26,7 +26,7 @@ def rulehandler():
     # TODO: Change rules for different communities here. Also, you can defined rules in json file.
     issueOrg = issue['repoInfo']['org']
     issueRepo = issue['repoInfo']['repo']
-    if issueOrg == 'mindspore' and issueRepo == 'mindspore':
+    if issueOrg == 'mindspore':
         community_assignee_list = ['fangwenyi', 'cheng_xiaoli']  # Community Maintainer
     else:
         community_assignee_list = ['userID1', 'userID2']
