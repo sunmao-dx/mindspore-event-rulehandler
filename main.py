@@ -27,6 +27,7 @@ def rulehandler():
     issueOrg = issue['repoInfo']['org']
     issueRepo = issue['repoInfo']['repo']
     if issueOrg == 'mindspore':
+        print("1111111111111111")
         community_assignee_list = ['fangwenyi', 'cheng_xiaoli']  # Community Maintainer
     else:
         community_assignee_list = ['userID1', 'userID2']
@@ -38,7 +39,7 @@ def rulehandler():
 
     bot_conf = {
         'community_assignee_list': community_assignee_list,
-        'community_assignee_list_test': community_assignee_list_test,
+#       'community_assignee_list_test': community_assignee_list_test,
         'info_text_template': info_text_template,
         'bot_reaction': label_bot_reaction
     }
