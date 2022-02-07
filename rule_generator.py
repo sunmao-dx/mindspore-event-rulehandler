@@ -58,6 +58,8 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
 
     # Generating rules
     rules = []
+    rulestest = []
+
     if user_activity == 'first_issuer' and user_habit == 'none':
 
         infoContent =  info_text_template['infoText']['assign_maintainer']
@@ -77,7 +79,7 @@ def info_rule_generator(issue, developer_portrait, bot_conf):
             'exeTime': execute_time,
             'infoPayload': info_payload
         }
-        rules.append(rule)
+        rulestest.append(rule)
 
     if is_user_ent == 0 or label_handler(issue_labels):
         infoContent =  info_text_template['infoText']['assign_maintainer']
