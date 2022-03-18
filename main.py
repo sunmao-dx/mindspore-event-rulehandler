@@ -26,10 +26,13 @@ def rulehandler():
     # TODO: Change rules for different communities here. Also, you can defined rules in json file.
     issueOrg = issue['repoInfo']['org']
     issueRepo = issue['repoInfo']['repo']
-    if issueOrg == 'mindspore' and issueRepo == 'mindspore':
-        community_assignee_list = ['lizi', 'mfl']  # Community Maintainer
+    
+    community_assignee = open("config/community_assignee.json", 'r', encoding = 'utf-8')
+    community_assignee = json.load(community_assignee)
+    if issueOrg in community_assignee.keys() and issueRepo in community_assignee[issueOrg].keys():
+        community_assignee_list = community_assignee[issueOrg][issueRepo]
     else:
-        community_assignee_list = ['userID1', 'userID2']
+        community_assignee_list = community_assignee["other"]["other"]
 
     with open("config/info_text_template.json", 'r', encoding='UTF-8') as load_f:
         info_text_template = pd.DataFrame(json.load(load_f)).set_index("infoType")
