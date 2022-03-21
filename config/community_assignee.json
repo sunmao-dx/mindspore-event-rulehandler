@@ -1,0 +1,14 @@
+{
+    "mindspore": {
+        "mindspore": [
+            "lizi",
+            "mfl"
+        ]
+    },
+    "other": {
+        "other": [
+            "userID1",
+            "userID2"
+        ]
+    }
+}
