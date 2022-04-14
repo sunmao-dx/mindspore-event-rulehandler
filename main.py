@@ -32,7 +32,7 @@ def rulehandler():
     if issueOrg in community_assignee.keys():
         community_assignee_list = community_assignee[issueOrg]
     else:
-        community_assignee_list = community_assignee["other"]["other"]
+        community_assignee_list = community_assignee["other"]
 
     # community_assignee_list_test = ['clement_li']
 
