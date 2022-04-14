@@ -1,14 +1,10 @@
 {
-    "mindspore": {
-        "mindspore": [
-            "lizi",
-            "mfl"
-        ]
-    },
-    "other": {
-        "other": [
-            "userID1",
-            "userID2"
-        ]
-    }
+    "mindspore": [
+        "fangwenyi",
+        "cheng_xiaoli"
+    ],
+    "other": [
+        "userID1",
+        "userID2"
+    ]
 }
