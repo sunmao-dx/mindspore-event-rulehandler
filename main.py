@@ -29,8 +29,8 @@ def rulehandler():
 
     community_assignee = open("config/community_assignee.json", 'r', encoding = 'utf-8')
     community_assignee = json.load(community_assignee)
-    if issueOrg in community_assignee.keys() and issueRepo in community_assignee[issueOrg].keys():
-        community_assignee_list = community_assignee[issueOrg][issueRepo]
+    if issueOrg in community_assignee.keys():
+        community_assignee_list = community_assignee[issueOrg]
     else:
         community_assignee_list = community_assignee["other"]["other"]
 
