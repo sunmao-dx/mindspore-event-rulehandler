@@ -1,6 +1,9 @@
 import json
 import pandas as pd
+import requests
+import os
 
+LABEL_BOT_URL = os.environ.get('LABEL_BOT_URL', 'http://127.0.0.1:8008')
 
 # Step 1: Multi-dimension developer portrait
 def label_developer_portrait(user, user_profile):
@@ -147,12 +150,16 @@ def rule_generator(issue, user_profile, bot_conf):
     issue_owner_portrait = label_developer_portrait(issue['issueUser']['issueUserID'], user_profile)
     # Step 2: Generate the rules
     info_rules = info_rule_generator(issue, issue_owner_portrait, bot_conf)
-    # Step 3: Finish the complete rule list
+    # Step 3: Import rules from label-bot [https://github.com/TECH4DX/label-bot.git]
+    label_bot_rules = get_label_bot_rules("Issue Hook", issue)
+    # Step 4: Finish the complete rule list
     rule_list = []
-    if not isinstance(info_rules, list):
+    if not isinstance(info_rules, list) or not isinstance(label_bot_rules, list):
         info_rules = list(info_rules)
-    rule_list = rule_list + info_rules
-    return rule_list
+        label_bot_rules = list(label_bot_rules)
+    rule_list = rule_list + info_rules + label_bot_rules
+    rules = list(filter(lambda x: rule_list.count(x) == 1, rule_list)) # Currently rule-handler and label-bot generate some same rules when creating an issue, so de-duplicated them here.
+    return rules
 
 def label_handler(labels):
     isContainUser = False
@@ -163,6 +170,56 @@ def label_handler(labels):
                 break
     return isContainUser
 
+def convert_payload(issue):
+    payload = dict()
+    payload["action"] = issue["issueAction"]
+    payload["enterprise"] = issue["repoInfo"]["ent"] if issue["repoInfo"]["ent"] != "" else None
+    payload["iid"] = issue["issueID"]
+
+    payload_issue = dict()
+    # payload_issue["assignee"] = issue["issueAssignee"] # Do not use this field, because label-bot will not unmarshal this one.
+    payload_issue["body"] = issue["issueContent"]
+    payload_issue["created_at"] = issue["issueTime"]
+
+    # payload_issue_labels = [{"name": labels["labelName"]} for labels in issue["issueLabel"]] if len(issue["issueLabel"]) != 0 else []
+    payload_issue_labels = [{"name": labels["labelName"]} for labels in issue["issueLabel"]] if issue["issueLabel"] is not None else [] # issue["issueLabel"] should be empty, but the retriever didn't pass it when empty.
+    payload_issue["labels"] = payload_issue_labels
+
+    payload_issue["number"] = issue["issueID"]
+    payload_issue["title"] = issue["issueTitle"]
+    payload_issue["updated_at"] = issue["issueUpdateTime"]
+
+    payload_issue_user = dict()
+    payload_issue_user["login"] = issue["issueUser"]["issueUserID"]
+    payload_issue_user["name"] = issue["issueUser"]["issueUserName"]
+    payload_issue["user"] = payload_issue_user
+
+    payload_repository = dict()
+    payload_repository["name"] = issue["repoInfo"]["repo"]
+    payload_repository["namespace"] = issue["repoInfo"]["org"]
+
+    payload["issue"] = payload_issue
+    payload["repository"] = payload_repository
+
+    return payload
+
+def get_label_bot_rules(event_type, issue):
+    # Label-bot needs the format of payload from Gitee, not customized structure ISSUE posted from data-cache
+    payload = convert_payload(issue)
+
+    try:
+        resp = requests.post(LABEL_BOT_URL, headers= {"event_type": event_type}, json = payload)
+        resp.encoding = 'utf-8'
+    except:
+        print("Requests err when posting to LABEL_BOT_URL [{}]".format(LABEL_BOT_URL))
+        return []
+    else:
+        if resp.status_code == 200:
+            hash_map = json.loads(resp.content)
+            rules = [content for content in hash_map.values()]
+            return rules
+        else:
+            return []
 
 
 if __name__ == "__main__":
@@ -176,8 +233,6 @@ if __name__ == "__main__":
                 '"issueLabel":["SIG/XX", "kind/bug"]}'
     test_issue = json.loads(issue_str)
 
-    # Loading user_profile data
-    # Loading data
     label_user_profile = pd.read_csv('config/developer_portrait/issue_label_user_profile.csv').set_index('owner_login')
     label_bot_reaction = pd.read_csv('config/bot_reaction/issue_label_rule_generator.csv').set_index('user_habit')
     community_assignee_list = ['lizi', 'mfl']  # Community Maintainer
