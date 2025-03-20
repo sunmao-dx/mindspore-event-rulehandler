@@ -20,7 +20,7 @@
         "English": "",
         "Chinese": "",
         "general_content":
-            "感谢您的提问，您可以评论//mindspore-assistant更快获取帮助：\n  1. 如果您刚刚接触MindSpore，或许您可以在[教程](https://mindspore.cn/tutorials/zh-CN/master/index.html)找到答案\n  2. 如果您是资深Pytorch用户，您或许需要：\n  - [与PyTorch典型区别](https://www.mindspore.cn/docs/zh-CN/master/migration_guide/model_development/model_development.html )：\n  - [PyTorch与MindSpore API映射表](https://mindspore.cn/docs/zh-CN/master/note/api_mapping/pytorch_api_mapping.html)\n  3. 如果您遇到动态图问题，可以设置set_context(pynative_synchronize=True)查看报错栈协助定位\n  4. 模型精度调优问题可参考官网[调优指南](https://www.mindspore.cn/docs/zh-CN/master/migration_guide/debug_and_tune.html)\n  5. 如果您反馈的是框架BUG，请确认您在ISSUE中提供了MindSpore版本、使用的后端类型（CPU、GPU、Ascend）、环境、训练的代码官方链接以及可以复现报错的代码的启动方式等必要的定位信息\n  6. 如果您已经定位出问题根因，欢迎提交PR参与MindSpore开源社区，我们会尽快review"
+            "感谢您的提问，您可以评论//mindspore-assistant更快获取帮助：\n  1. 如果您刚刚接触MindSpore，或许您可以在[教程](https://mindspore.cn/tutorials/zh-CN/master/index.html)找到答案\n  2. 如果您是资深Pytorch用户，您或许需要：\n - [PyTorch与MindSpore API映射表](https://mindspore.cn/docs/zh-CN/master/note/api_mapping/pytorch_api_mapping.html)\n  3. 如果您反馈的是框架BUG，请确认您在ISSUE中提供了MindSpore版本、使用的后端类型（CPU、GPU、Ascend）、环境、训练的代码官方链接以及可以复现报错的代码的启动方式等必要的定位信息\n  4. 如果您已经定位出问题根因，欢迎提交PR参与MindSpore开源社区，我们会尽快review"
     }
 },
 {
